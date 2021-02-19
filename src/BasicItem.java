@@ -2,50 +2,54 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 class BasicItem {
-    private String name;
-    private double price;
-    private int quantity;
-    private String type;
+    private String itemName;
+    private double itemPrice;
+    private int itemQuant;
+    private String itemType;
     private double tax;
-
+//default constructor
     BasicItem() {
-        this.name = "";
-        this.price = 0.0;
-        this.quantity = 0;
-        this.type = "";
+        this.itemName = "";
+        this.itemPrice = 0.0;
+        this.itemQuant = 0;
+        this.itemType = "";
         this.tax = 0.0;
     }
 
+    //getter setter methods
     public String getName() {
-        return this.name;
+        return this.itemName;
     }
 
     public double getPrice() {
-        return this.price;
+        return this.itemPrice;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setPrice(double itemPrice) {
+        this.itemPrice = itemPrice;
     }
+
+    public int getItemQuant() { return itemQuant; }
 
     public String getType() {
-        return this.type;
+        return this.itemType;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setType(String itemType) {
+        this.itemType = itemType;
     }
 
     public double getTax() {
         return this.tax;
     }
 
+    // strips off input array and does type check and value assignmnet
     public void getItemBasicItem(String[] args) {
         for (int i = 0; i < args.length; i++) {
             //check if all the fields have correct values
             try {
                 if ("-name".compareTo(args[i]) == 0 && "-type".compareTo(args[i + 1]) != 0 && "-price".compareTo(args[i + 1]) != 0 && "-quantity".compareTo(args[i + 1]) != 0) {
-                    this.name = args[i + 1];
+                    this.itemName = args[i + 1];
                     i = i + 1;
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
@@ -54,7 +58,7 @@ class BasicItem {
             }
             try {
                 if ("-type".compareTo(args[i]) == 0 && "-price".compareTo(args[i + 1]) != 0 && "-quantity".compareTo(args[i + 1]) != 0 && "-name".compareTo(args[i + 1]) != 0) {
-                    this.type = args[i + 1];
+                    this.itemType = args[i + 1];
                     i = i + 1;
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
@@ -64,7 +68,7 @@ class BasicItem {
             try {
                 if ("-price".compareTo(args[i]) == 0 && "-type".compareTo(args[i + 1]) != 0 && "quantity".compareTo(args[i + 1]) != 0 && "-name".compareTo(args[i + 1]) != 0) {
                     try {
-                        this.price = Double.parseDouble(args[i + 1]);
+                        this.itemPrice = Double.parseDouble(args[i + 1]);
                         i = i + 1;
                     } catch (NumberFormatException e) {
                         System.out.println("Invalid Input!");
@@ -78,7 +82,7 @@ class BasicItem {
             try {
                 if ("-quantity".compareTo(args[i]) == 0 && "-type".compareTo(args[i + 1]) != 0 && "-price".compareTo(args[i + 1]) != 0 && "-name".compareTo(args[i + 1]) != 0) {
                     try {
-                        this.quantity = Integer.parseInt(args[i + 1]);
+                        this.itemQuant = Integer.parseInt(args[i + 1]);
                         i = i + 1;
                     } catch (NumberFormatException e) {
                         System.out.println("Invalid Input!");
@@ -92,18 +96,18 @@ class BasicItem {
         }
         calculateTax();
     }
-
+    // calculate tax based on itemType
     public void calculateTax() {
-        if (this.price != 0) {
-            if ("raw".equals(this.type)) {
-                this.tax = 0.125 * this.price;
+        if (this.itemPrice != 0) {
+            if ("raw".equals(this.itemType)) {
+                this.tax = 0.125 * this.itemPrice;
 
-            } else if ("manufactured".equals(this.type)) {
-                this.tax = 0.125 * this.price + (0.02 * (this.price + 0.125 * this.price));
-            } else if ("imported".equals(this.type)) {
-                this.tax = this.price * 0.1;
+            } else if ("manufactured".equals(this.itemType)) {
+                this.tax = 0.125 * this.itemPrice + (0.02 * (this.itemPrice + 0.125 * this.itemPrice));
+            } else if ("imported".equals(this.itemType)) {
+                this.tax = this.itemPrice * 0.1;
                 double surcharge = 0.0;
-                double total = this.price + this.tax;
+                double total = this.itemPrice + this.tax;
                 //calculating surcharge amount
                 if (total <= 100) {
                     surcharge = 5;
@@ -116,5 +120,6 @@ class BasicItem {
             }
         }
     }
+
 
 }
