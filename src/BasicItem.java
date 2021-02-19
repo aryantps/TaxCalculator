@@ -1,14 +1,19 @@
 public class BasicItem {
 
     private String itemName;
-    private double itemPrice;
+    public double itemPrice;
     private int itemQuant;
+    public String itemType;
     private double finalPrice;
     public double tax = 0.0;
 
-    public BasicItem(String itemName, double itemPrice){
-        this.itemName = itemName;
-        this.itemPrice = itemPrice;
+
+    public void BasicItem(){
+        this.itemName = "";
+        this.itemPrice = 0.0;
+        this.itemQuant = 0;
+        this.itemType = "";
+        this.tax = 0.0;
     }
 
     public String getItemName() {
@@ -54,5 +59,73 @@ public class BasicItem {
 
 
     }
+    public void getItemDetails(String[] args) {
+            for (int i = 0; i < args.length; i++) {
+                //check if all the fields have correct values
+                try {
+                    if ("-name".compareTo(args[i]) == 0 && "-type".compareTo(args[i + 1]) != 0 && "-price".compareTo(args[i + 1]) != 0 && "-quantity".compareTo(args[i + 1]) != 0) {
+                        this.itemName = args[i + 1];
+                        i = i + 1;
+                    }
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    System.out.println("Value not entered!");
+                    System.exit(0);
+                }
+                try {
+                    if ("-type".compareTo(args[i]) == 0 && "-price".compareTo(args[i + 1]) != 0 && "-quantity".compareTo(args[i + 1]) != 0 && "-name".compareTo(args[i + 1]) != 0) {
+                        this.itemType = args[i + 1];
+                        i = i + 1;
+                    }
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    System.out.println("Value not entered!");
+                    System.exit(0);
+                }
+                try {
+                    if ("-price".compareTo(args[i]) == 0 && "-type".compareTo(args[i + 1]) != 0 && "quantity".compareTo(args[i + 1]) != 0 && "-name".compareTo(args[i + 1]) != 0) {
+                        try {
+                            this.itemPrice = Double.parseDouble(args[i + 1]);
+                            i = i + 1;
+                        } catch (NumberFormatException e) {
+                            System.out.println("Invalid Input!");
+                            System.exit(0);
+                        }
+                    }
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    System.out.println("Value not entered!");
+                    System.exit(0);
+                }
+                try {
+                    if ("-quantity".compareTo(args[i]) == 0 && "-type".compareTo(args[i + 1]) != 0 && "-price".compareTo(args[i + 1]) != 0 && "-name".compareTo(args[i + 1]) != 0) {
+                        try {
+                            this.itemQuant = Integer.parseInt(args[i + 1]);
+                            i = i + 1;
+                        } catch (NumberFormatException e) {
+                            System.out.println("Invalid Input!");
+                            System.exit(0);
+                        }
+                    }
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    System.out.println("Value not entered!");
+                    System.exit(0);
+                }
+            }
+            //calculateTax function
+            taxCalculator();
+        }
 
+    public String getItemType() {
+        return itemType;
+    }
+
+    public void setItemType(String itemType) {
+        this.itemType = itemType;
+    }
+
+    public double getTax() {
+        return tax;
+    }
+
+    public void setTax(double tax) {
+        this.tax = tax;
+    }
 }
