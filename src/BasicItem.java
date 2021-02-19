@@ -1,71 +1,51 @@
-public class BasicItem {
+import java.util.ArrayList;
+import java.util.Scanner;
 
-    private String itemName;
-    private double itemPrice;
-    private int itemQuant;
-    private String itemType;
-//    private double finalPrice;
-    private double tax = 0.0;
-
+class BasicItem {
+    private String name;
+    private double price;
+    private int quantity;
+    private String type;
+    private double tax;
 
     BasicItem() {
-        this.itemName = "";
-        this.itemPrice = 0.0;
-        this.itemQuant = 0;
-        this.itemType = "";
+        this.name = "";
+        this.price = 0.0;
+        this.quantity = 0;
+        this.type = "";
         this.tax = 0.0;
     }
 
-    public String getItemName() {
-        return itemName;
+    public String getName() {
+        return this.name;
     }
 
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
+    public double getPrice() {
+        return this.price;
     }
 
-    public double getItemPrice() {
-        return itemPrice;
+    public void setPrice(double price) {
+        this.price = price;
     }
 
-    public void setItemPrice(double itemPrice) {
-        this.itemPrice = itemPrice;
+    public String getType() {
+        return this.type;
     }
 
-    public int getItemQuant() {
-        return itemQuant;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public void setItemQuant(int itemQuant) {
-        this.itemQuant = itemQuant;
+    public double getTax() {
+        return this.tax;
     }
 
-//    public double getFinalPrice() {
-//        return finalPrice;
-//    }
-//
-//    public void setFinalPrice(double finalPrice) {
-//        this.finalPrice = tax + itemPrice * itemQuant;
-//    }
-
-    private void outputAtEnd() {
-        System.out.println("Item name : " + itemName);
-        System.out.println("Item Type: "  /* Don't know*/);
-        System.out.println("Item Price: " + itemPrice);
-        System.out.println("Item Quantity: " + itemQuant);
-        System.out.println("Sales tax : " + tax);
-//        System.out.println("Final Price : " + finalPrice);
-        System.out.println("\n");
-
-
-    }
-
-    public void getItemDetails(String[] args) {
+    public void getItemBasicItem(String[] args) {
         for (int i = 0; i < args.length; i++) {
             //check if all the fields have correct values
             try {
                 if ("-name".compareTo(args[i]) == 0 && "-type".compareTo(args[i + 1]) != 0 && "-price".compareTo(args[i + 1]) != 0 && "-quantity".compareTo(args[i + 1]) != 0) {
-                    this.itemName = args[i + 1];
+                    this.name = args[i + 1];
                     i = i + 1;
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
@@ -74,7 +54,7 @@ public class BasicItem {
             }
             try {
                 if ("-type".compareTo(args[i]) == 0 && "-price".compareTo(args[i + 1]) != 0 && "-quantity".compareTo(args[i + 1]) != 0 && "-name".compareTo(args[i + 1]) != 0) {
-                    this.itemType = args[i + 1];
+                    this.type = args[i + 1];
                     i = i + 1;
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
@@ -84,7 +64,7 @@ public class BasicItem {
             try {
                 if ("-price".compareTo(args[i]) == 0 && "-type".compareTo(args[i + 1]) != 0 && "quantity".compareTo(args[i + 1]) != 0 && "-name".compareTo(args[i + 1]) != 0) {
                     try {
-                        this.itemPrice = Double.parseDouble(args[i + 1]);
+                        this.price = Double.parseDouble(args[i + 1]);
                         i = i + 1;
                     } catch (NumberFormatException e) {
                         System.out.println("Invalid Input!");
@@ -98,7 +78,7 @@ public class BasicItem {
             try {
                 if ("-quantity".compareTo(args[i]) == 0 && "-type".compareTo(args[i + 1]) != 0 && "-price".compareTo(args[i + 1]) != 0 && "-name".compareTo(args[i + 1]) != 0) {
                     try {
-                        this.itemQuant = Integer.parseInt(args[i + 1]);
+                        this.quantity = Integer.parseInt(args[i + 1]);
                         i = i + 1;
                     } catch (NumberFormatException e) {
                         System.out.println("Invalid Input!");
@@ -110,37 +90,20 @@ public class BasicItem {
                 System.exit(0);
             }
         }
-        //calculateTax function
-        taxCal();
+        calculateTax();
     }
 
-    public String getItemType() {
-        return itemType;
-    }
+    public void calculateTax() {
+        if (this.price != 0) {
+            if ("raw".equals(this.type)) {
+                this.tax = 0.125 * this.price;
 
-    public void setItemType(String itemType) {
-        this.itemType = itemType;
-    }
-
-    public double getTax() {
-        return tax;
-    }
-
-    public void setTax(double tax) {
-        this.tax = tax;
-    }
-
-    public void taxCal() {
-        if (this.itemPrice != 0) {
-            if ("raw".equals(this.itemType)) {
-                this.tax = 0.125 * this.itemPrice;
-
-            } else if ("manufactured".equals(this.itemType)) {
-                this.tax = 0.125 * this.itemPrice + (0.02 * (this.itemPrice + 0.125 * this.itemPrice));
-            } else if ("imported".equals(this.itemType)) {
-                this.tax = this.itemPrice * 0.1;
-                double surcharge;
-                double total = this.itemPrice + this.tax;
+            } else if ("manufactured".equals(this.type)) {
+                this.tax = 0.125 * this.price + (0.02 * (this.price + 0.125 * this.price));
+            } else if ("imported".equals(this.type)) {
+                this.tax = this.price * 0.1;
+                double surcharge = 0.0;
+                double total = this.price + this.tax;
                 //calculating surcharge amount
                 if (total <= 100) {
                     surcharge = 5;
@@ -153,4 +116,5 @@ public class BasicItem {
             }
         }
     }
+
 }
