@@ -29,7 +29,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         char choice = 'n';
         do {
-            System.out.println("Enter details of new item :");
+            System.out.println("Enter details of new item :\n \t Example : -name butter -price 100 -quantity 3 -type raw \n");
             String input = sc.next();
             input += sc.nextLine();
             String[] inpArray = input.split(" ");
