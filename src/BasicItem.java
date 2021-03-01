@@ -43,7 +43,14 @@ class BasicItem {
         return this.tax;
     }
 
-    // strips off input array and does type check and value assignmnet
+
+    /**
+     * <p>
+     * strips off input array and does type check and value assignment
+     * </p>
+     * @param String[] args
+     *
+     */
     public void getItemBasicItem(String[] args) {
         for (int i = 0; i < args.length; i++) {
             //check if all the fields have correct values

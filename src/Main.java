@@ -3,6 +3,7 @@ import java.util.Scanner;
 
 public class Main {
     //print details of item
+
     public static void printBasicItem(ArrayList<BasicItem> items) {
         for (BasicItem detail : items) {
             if (detail.getType() == "") {
